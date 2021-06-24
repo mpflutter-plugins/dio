@@ -7,8 +7,8 @@ import '../options.dart';
 import '../adapter.dart';
 import 'dart:js' as js;
 
-const bool isTaro =
-    bool.fromEnvironment('mpcore.env.taro', defaultValue: false);
+final bool isTaro = js.context['Taro'] != null &&
+    (js.context['Taro'] as js.JsObject)['request'] != null;
 
 HttpClientAdapter createAdapter() => TaroHttpClientAdapter();
 
