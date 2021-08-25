@@ -49,11 +49,10 @@ class WXHttpClientAdapter implements HttpClientAdapter {
           if (response['header'] is js.JsObject) {
             _JsMap(response['header'] as js.JsObject).forEach((key, value) {
               if (value is String) {
-                headers[key] = value;
+                headers[key.toLowerCase()] = value;
               }
             });
           }
-
           completer.complete(
             ResponseBody.fromBytes(
               body,
