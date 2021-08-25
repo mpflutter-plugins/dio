@@ -2,7 +2,7 @@ import '../dio_mixin.dart';
 import '../options.dart';
 import '../dio.dart';
 import '../adapters/browser_adapter.dart';
-import '../adapters/taro_adapter.dart' as taro;
+import '../adapters/wx_adapter.dart' as wx;
 
 Dio createDio([BaseOptions? options]) => DioForBrowser(options);
 
@@ -12,6 +12,6 @@ class DioForBrowser with DioMixin implements Dio {
   DioForBrowser([BaseOptions? options]) {
     this.options = options ?? BaseOptions();
     httpClientAdapter =
-        taro.isTaro ? taro.TaroHttpClientAdapter() : BrowserHttpClientAdapter();
+        wx.isWX ? wx.WXHttpClientAdapter() : BrowserHttpClientAdapter();
   }
 }

@@ -7,12 +7,12 @@ import '../options.dart';
 import '../adapter.dart';
 import 'dart:js' as js;
 
-final bool isTaro = js.context['Taro'] != null &&
-    (js.context['Taro'] as js.JsObject)['request'] != null;
+final bool isWX = js.context['wx'] != null &&
+    (js.context['wx'] as js.JsObject)['request'] != null;
 
-HttpClientAdapter createAdapter() => TaroHttpClientAdapter();
+HttpClientAdapter createAdapter() => WXHttpClientAdapter();
 
-class TaroHttpClientAdapter implements HttpClientAdapter {
+class WXHttpClientAdapter implements HttpClientAdapter {
   js.JsObject? requestTask;
 
   /// Whether to send credentials such as cookies or authorization headers for
@@ -35,7 +35,7 @@ class TaroHttpClientAdapter implements HttpClientAdapter {
 
     var completer = Completer<ResponseBody>();
 
-    requestTask = (js.context['Taro'] as js.JsObject).callMethod('request', [
+    requestTask = (js.context['wx'] as js.JsObject).callMethod('request', [
       js.JsObject.jsify({
         'url': options.uri.toString(),
         'method': options.method,
@@ -43,7 +43,7 @@ class TaroHttpClientAdapter implements HttpClientAdapter {
         'responseType': 'arraybuffer',
         'data': bytes,
         'success': (response) {
-          final body = base64.decode((js.context['Taro'] as js.JsObject)
+          final body = base64.decode((js.context['wx'] as js.JsObject)
               .callMethod('arrayBufferToBase64', [response['data']]) as String);
           final headers = <String, String>{};
           if (response['header'] is js.JsObject) {
