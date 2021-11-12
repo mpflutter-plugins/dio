@@ -16,7 +16,7 @@ const cosInstance = new COS({
 const cosBucket = "mpflutter-dist-1253771526";
 const cosRegion = "ap-guangzhou";
 
-const currentVersion = '4.0.0';
+const currentVersion = "4.0.0";
 
 class DartPackageDeployer {
   constructor(name) {
@@ -79,13 +79,9 @@ class DartPackageDeployer {
         environment: {
           sdk: originYaml.environment?.sdk
             ? originYaml.environment.sdk
-                .replace(/>/g, "&gt;")
-                .replace(/</g, "&lt;")
             : undefined,
           flutter: originYaml.environment?.flutter
             ? originYaml.environment.flutter
-                .replace(/>/g, "&gt;")
-                .replace(/</g, "&lt;")
             : undefined,
         },
         dependencies: originYaml.dependencies || {},
@@ -120,7 +116,7 @@ class DartPackageDeployer {
             }
           })();
           pkgJSON["name"] = this.name;
-          if (currentVersion !== '0.0.1-master') {
+          if (currentVersion !== "0.0.1-master") {
             pkgJSON["latest"] = pubspec;
           }
           if (!pkgJSON["versions"]) {
