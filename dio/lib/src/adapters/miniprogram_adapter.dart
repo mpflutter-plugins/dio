@@ -63,7 +63,15 @@ class MiniProgramHttpClientAdapter implements HttpClientAdapter {
         'method': options.method,
         'header': options.headers,
         'responseType': 'arraybuffer',
-        'data': bytes,
+        'data': (() {
+          final contentType = options.headers['content-type'];
+          if (contentType is String &&
+              contentType.contains('utf-8') &&
+              bytes != null) {
+            return utf8.decode(bytes);
+          }
+          return bytes;
+        })(),
         'success': (response) {
           if (_miniProgramScope == 'wx') {
             final body = base64.decode((js.context['wx'] as js.JsObject)
