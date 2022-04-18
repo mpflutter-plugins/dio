@@ -66,7 +66,11 @@ class MiniProgramHttpClientAdapter implements HttpClientAdapter {
         'data': (() {
           final contentType = options.headers['content-type'];
           if (contentType is String &&
-              contentType.contains('utf-8') &&
+              (contentType.contains('utf-8') ||
+                  contentType.contains('application/x-www-form-urlencoded') ||
+                  contentType.contains('application/json') ||
+                  contentType.contains('application/xml') ||
+                  contentType.contains('text/')) &&
               bytes != null) {
             return utf8.decode(bytes);
           }
